@@ -1,0 +1,63 @@
+from django.shortcuts import render
+from django.http import HttpResponse, HttpResponseRedirect
+from django.urls import reverse
+from django.db import connections
+
+from .models import TreatmentPosition
+
+def dictfetchall(cursor):
+    columns = [col[0] for col in cursor.description]
+    return [
+        dict(zip(columns, row))
+        for row in cursor.fetchall()
+    ]
+
+def index(request):
+    return render(request, 'shifty/index.html')
+
+def list(request):
+    with connections['crad'].cursor() as cursor:
+        cursor.execute("SELECT * FROM Patient ORDER BY Name")
+        patients = dictfetchall(cursor)
+
+    #take out any non-numeric MRNs
+    clean_patients = []
+    for pt in patients:
+        if pt['Patient_ID'].isdigit():
+            clean_patients.append(pt)
+
+    return render(request, 'shifty/list.html', {'patients': clean_patients})
+
+def add_form(request):
+    return render(request, 'shifty/add_form.html')
+
+def add(request):
+    pos = TreatmentPosition.objects.create(
+        mrn = request.POST['mrn'],
+        date = request.POST['date'],
+        vert = request.POST['vert'],
+        long = request.POST['long'],
+        lat = request.POST['lat']
+    )
+    return HttpResponseRedirect(reverse('shifty:index'))
+
+def view_patient(request, mrn):
+    with connections['crad'].cursor() as cursor:
+        cursor.execute("SELECT PatientID FROM Patient WHERE Patient_ID=%s",[mrn])
+        patientID = cursor.fetchone()
+        cursor.execute("SELECT PatientSessionID FROM PatientSession WHERE PatientID=%s ORDER BY CreatedOn DESC",[patientID[0]])
+        sessionIDs = cursor.fetchall()
+        finalPositions = []
+        for sessionID in sessionIDs:
+            cursor.execute("SELECT PositionResultID, LiveImageID FROM PositionResult WHERE PatientSessionID=%s",[sessionID[0]])
+            positionResults = cursor.fetchall()
+            final_pos_sql = "SELECT TOP 1 CouchVert, CouchLong, CouchLat FROM Image where ImageID='"+positionResults[0][1]+"'"
+            if len(positionResults) > 1:
+                for pr in positionResults[1:]:
+                    final_pos_sql += " OR ImageID="+"'"+pr[1]+"'"
+            final_pos_sql += " ORDER BY CreatedOn DESC"
+            cursor.execute(final_pos_sql)
+            pos = cursor.fetchone()
+            finalPositions.append((pos[0], pos[1], pos[2]))
+
+    return render(request, 'shifty/view_patient.html', {'finalPositions':finalPositions})

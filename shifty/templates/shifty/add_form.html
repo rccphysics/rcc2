@@ -1,0 +1,20 @@
+<h1>Add Final Treatment Position</h1>
+
+<form action="{% url 'shifty:add' %}" method="post">
+{% csrf_token %}
+  <label for="mrn">MRN</label>
+  <input type="text" name="mrn" id="mrn" /><br />
+  <label for="date">Date</label>
+  <input type="date" name="date" id="date" /><br />
+  <label for="vert">Vert</label>
+  <input type="text" name="vert" id="vert" /><br />
+  <label for="long">Long</label>
+  <input type="text" name="long" id="long" /><br />
+  <label for="lat">Lat</label>
+  <input type="text" name="lat" id="lat" /><br />
+  <br />
+  <input type="submit" value="Submit" />
+</form>
+
+<br /><br />
+<a href="{% url 'shifty:index' %}">Home</a>

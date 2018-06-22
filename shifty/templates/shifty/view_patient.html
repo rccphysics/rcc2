@@ -1,0 +1,18 @@
+<h1>Patient</h1>
+<table>
+  <tr>
+    <th>Vert</th>
+    <th>Long</th>
+    <th>Lat</th>
+  </tr>
+  {% for fp in finalPositions %}
+  <tr>
+    <td>{{ fp.0 }}</td>
+    <td>{{ fp.1 }}</td>
+    <td>{{ fp.2 }}</td>
+  </tr>
+  {% endfor %}
+</table>
+
+<br /><br />
+<a href="{% url 'shifty:index' %}">Home</a>

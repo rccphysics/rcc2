@@ -1,0 +1,9 @@
+<h1>All Patients:</h1>
+<ul>
+    {% for patient in patients %}
+    <li><a href="{% url 'shifty:view_patient' patient.Patient_ID %}">{{ patient.Patient_ID }}</a> - {{ patient.Name }}</li>
+    {% endfor %}
+</ul>
+
+<br /><br />
+<a href="{% url 'shifty:index' %}">Home</a>

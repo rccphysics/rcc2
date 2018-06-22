@@ -37,7 +37,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'quarks.apps.QuarksConfig'
+    'quarks.apps.QuarksConfig',
+    'shifty.apps.ShiftyConfig',
 ]
 
 MIDDLEWARE = [
@@ -78,6 +79,13 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
         'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+    },
+    'crad': {
+        'ENGINE': 'sql_server.pyodbc',
+        'NAME': 'c4D',
+        'HOST': '10.110.176.147',
+        'USER': 'physics',
+        'PASSWORD': 'Radiation!'
     }
 }
 
