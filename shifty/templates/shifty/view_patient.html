@@ -9,6 +9,7 @@
 <table class="table table-striped">
   <thead class="thead-dark">
     <tr>
+      <th>Date</th>
       <th>Vert</th>
       <th>Long</th>
       <th>Lat</th>
@@ -17,9 +18,10 @@
   <tbody>
     {% for fp in finalPositions %}
     <tr>
-      <td>{{ fp.0 }}</td>
-      <td>{{ fp.1 }}</td>
-      <td>{{ fp.2 }}</td>
+      <td>{{ fp.date|date:"SHORT_DATE_FORMAT" }}</td>
+      <td>{{ fp.crad.0 }}</td>
+      <td>{{ fp.crad.1 }}</td>
+      <td>{{ fp.crad.2 }}</td>
     </tr>
     {% endfor %}
   </tbody>

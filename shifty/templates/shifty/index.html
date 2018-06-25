@@ -1,3 +1,10 @@
+{% load bootstrap4 %}
+
+{% bootstrap_css %}
+{% bootstrap_javascript jquery="full" %}
+
+{% bootstrap_messages %}
+
 <h1>Shifty</h1>
 
 <a href="{% url 'shifty:add_form' %}">Add a Position</a>
