@@ -62,5 +62,7 @@ def view_patient(request, mrn):
             cursor.execute(final_pos_sql)
             pos = cursor.fetchone()
             finalPositions.append((pos[0], pos[1], pos[2]))
+        cursor.execute("SELECT Name FROM Patient WHERE Patient_ID=%s",[mrn])
+        name = cursor.fetchone()
 
-    return render(request, 'shifty/view_patient.html', {'finalPositions':finalPositions})
+    return render(request, 'shifty/view_patient.html', {'name':name[0], 'mrn':mrn, 'finalPositions':finalPositions})
