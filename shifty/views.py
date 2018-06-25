@@ -44,13 +44,23 @@ def add_form(request):
     return render(request, 'shifty/add_form.html')
 
 def add(request):
-    pos = TreatmentPosition.objects.create(
-        mrn = request.POST['mrn'],
-        date = request.POST['date'],
-        vert = request.POST['vert'],
-        long = request.POST['long'],
-        lat = request.POST['lat']
-    )
+    patient_mrn = request.POST['mrn']
+    patient_date = request.DATE['date']
+
+    try:
+        result = TreatmentPosition.objects.filter(mrn__exact=patient_mrn).filter(date__exact=patient_date)[0]
+        result.vert = request.POST['vert']
+        result.long = request.POST['long']
+        result.lat = request.POST['lat']
+        result.save()
+    except IndexError:
+        pos = TreatmentPosition.objects.create(
+            mrn = request.POST['mrn'],
+            date = request.POST['date'],
+            vert = request.POST['vert'],
+            long = request.POST['long'],
+            lat = request.POST['lat']
+        )
 
     if 'submitagain' in request.POST:
         return render(request, 'shifty/add_form.html', {'mrn': request.POST['mrn']})
