@@ -83,10 +83,17 @@ def view_patient(request, mrn):
             final_pos_sql += " ORDER BY CreatedOn DESC"
             cursor.execute(final_pos_sql)
             pos = cursor.fetchone()
+
+            try:
+                imagingPos = TreatmentPosition.objects.filter(mrn__exact=mrn).filter(date__exact=pos[0])[0]
+                ipos = (imagingPos.vert, imagingPos.long, imagingPos.lat)
+            except IndexError:
+                ipos = (0,0,0)
+
             finalPositions.append({
                 'date': pos[0],
                 'crad': crad_to_varian_coords(pos[1], pos[2], pos[3]),
-                'imaging': (0,0,0)
+                'imaging': ipos
             })
         cursor.execute("SELECT Name FROM Patient WHERE Patient_ID=%s",[mrn])
         name = cursor.fetchone()
