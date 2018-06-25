@@ -21,9 +21,6 @@ def crad_to_varian_coords(vert, long, lat):
         vlat = round(lat,1)
     return (vvert, vlong, vlat)
 
-def crad_to_varian_coords(coords):
-    return crad_to_varian_coords(*coords)
-
 def index(request):
     return render(request, 'shifty/index.html')
 
@@ -45,7 +42,7 @@ def add_form(request):
 
 def add(request):
     patient_mrn = request.POST['mrn']
-    patient_date = request.DATE['date']
+    patient_date = request.POST['date']
 
     try:
         result = TreatmentPosition.objects.filter(mrn__exact=patient_mrn).filter(date__exact=patient_date)[0]
