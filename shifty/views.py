@@ -39,6 +39,10 @@ def add(request):
         long = request.POST['long'],
         lat = request.POST['lat']
     )
+
+    if 'submitagain' in request.POST:
+        return render(request, 'shifty/add_form.html', {'mrn': request.POST['mrn']})
+
     return HttpResponseRedirect(reverse('shifty:index'))
 
 def view_patient(request, mrn):
