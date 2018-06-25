@@ -1,15 +1,22 @@
+{% load bootstrap4 %}
+
+{% bootstrap_css %}
+{% bootstrap_javascript jquery="full" %}
+
+{% bootstrap_messages %}
+
 <h1>Patient</h1>
-<table style="border: 1px solid black">
+<table>
   <tr>
-    <th style="border: 1px solid black">Vert</th>
-    <th style="border: 1px solid black">Long</th>
-    <th style="border: 1px solid black">Lat</th>
+    <th>Vert</th>
+    <th>Long</th>
+    <th>Lat</th>
   </tr>
   {% for fp in finalPositions %}
   <tr>
-    <td style="border: 1px solid black">{{ fp.0 }}</td>
-    <td style="border: 1px solid black">{{ fp.1 }}</td>
-    <td style="border: 1px solid black">{{ fp.2 }}</td>
+    <td>{{ fp.0 }}</td>
+    <td>{{ fp.1 }}</td>
+    <td>{{ fp.2 }}</td>
   </tr>
   {% endfor %}
 </table>
