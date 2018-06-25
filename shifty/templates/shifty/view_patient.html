@@ -1,15 +1,15 @@
 <h1>Patient</h1>
-<table>
+<table style="border: 1px solid black">
   <tr>
-    <th>Vert</th>
-    <th>Long</th>
-    <th>Lat</th>
+    <th style="border: 1px solid black">Vert</th>
+    <th style="border: 1px solid black">Long</th>
+    <th style="border: 1px solid black">Lat</th>
   </tr>
   {% for fp in finalPositions %}
   <tr>
-    <td>{{ fp.0 }}</td>
-    <td>{{ fp.1 }}</td>
-    <td>{{ fp.2 }}</td>
+    <td style="border: 1px solid black">{{ fp.0 }}</td>
+    <td style="border: 1px solid black">{{ fp.1 }}</td>
+    <td style="border: 1px solid black">{{ fp.2 }}</td>
   </tr>
   {% endfor %}
 </table>

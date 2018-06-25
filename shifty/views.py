@@ -56,9 +56,8 @@ def view_patient(request, mrn):
             cursor.execute("SELECT PositionResultID, LiveImageID FROM PositionResult WHERE PatientSessionID=%s",[sessionID[0]])
             positionResults = cursor.fetchall()
             final_pos_sql = "SELECT TOP 1 CouchVert, CouchLong, CouchLat FROM Image where ImageID='"+positionResults[0][1]+"'"
-            if len(positionResults) > 1:
-                for pr in positionResults[1:]:
-                    final_pos_sql += " OR ImageID="+"'"+pr[1]+"'"
+            for pr in positionResults[1:]:
+                final_pos_sql += " OR ImageID="+"'"+pr[1]+"'"
             final_pos_sql += " ORDER BY CreatedOn DESC"
             cursor.execute(final_pos_sql)
             pos = cursor.fetchone()
