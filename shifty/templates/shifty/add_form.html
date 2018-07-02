@@ -1,9 +1,6 @@
-{% load bootstrap4 %}
+{% extends 'shifty/base.html' %}
 
-{% bootstrap_css %}
-{% bootstrap_javascript jquery="full" %}
-
-{% bootstrap_messages %}
+{% block content %}
 
 <h1>Add Final Treatment Position</h1>
 
@@ -24,5 +21,4 @@
   <input type="submit" value="Submit and Enter Another" name="submitagain" />
 </form>
 
-<br /><br />
-<a href="{% url 'shifty:index' %}">Home</a>
+{% endblock %}

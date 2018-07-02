@@ -1,9 +1,6 @@
-{% load bootstrap4 %}
+{% extends 'shifty/base.html' %}
 
-{% bootstrap_css %}
-{% bootstrap_javascript jquery="full" %}
-
-{% bootstrap_messages %}
+{% block content %}
 
 <h1>{{ name }} -- {{ mrn }}</h1>
 <table class="table table-striped">
@@ -33,5 +30,4 @@
   </tbody>
 </table>
 
-<br /><br />
-<a href="{% url 'shifty:index' %}">Home</a>
+{% endblock %}

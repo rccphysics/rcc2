@@ -1,9 +1,6 @@
-{% load bootstrap4 %}
+{% extends 'shifty/base.html' %}
 
-{% bootstrap_css %}
-{% bootstrap_javascript jquery="full" %}
-
-{% bootstrap_messages %}
+{% block content %}
 
 <h1>All Patients:</h1>
 <ul>
@@ -12,5 +9,4 @@
     {% endfor %}
 </ul>
 
-<br /><br />
-<a href="{% url 'shifty:index' %}">Home</a>
+{% endblock %}

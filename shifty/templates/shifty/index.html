@@ -1,12 +1,11 @@
-{% load bootstrap4 %}
+{% extends 'shifty/base.html' %}
 
-{% bootstrap_css %}
-{% bootstrap_javascript jquery="full" %}
-
-{% bootstrap_messages %}
+{% block content %}
 
 <h1>Shifty</h1>
 
 <a href="{% url 'shifty:add_form' %}">Add a Position</a>
 <br />
 <a href="{% url 'shifty:list' %}">List all Patients</a>
+
+{% endblock %}
