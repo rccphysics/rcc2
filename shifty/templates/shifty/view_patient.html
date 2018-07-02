@@ -7,24 +7,38 @@
   <thead class="thead-dark">
     <tr>
       <th>Date</th>
-      <th>Vert</th>
-      <th>Long</th>
-      <th>Lat</th>
-      <th>Final Vert</th>
-      <th>Final Long</th>
-      <th>Final Lat</th>
+      <th></th>
+      <th>Original</th>
+      <th>C-RAD</th>
+      <th>Imaging</th>
     </tr>
   </thead>
   <tbody>
     {% for fp in finalPositions %}
     <tr>
       <td>{{ fp.date|date:"SHORT_DATE_FORMAT" }}</td>
-      <td>{{ fp.crad.0 }}</td>
-      <td>{{ fp.crad.1 }}</td>
-      <td>{{ fp.crad.2 }}</td>
-      <td>{{ fp.imaging.0 }}</td>
-      <td>{{ fp.imaging.1 }}</td>
-      <td>{{ fp.imaging.2 }}</td>
+      <td>
+        <div>
+          Vert<br />
+          Long<br />
+          Lat
+        </div>
+      </td>
+      <td></td>
+      <td>
+        <div>
+          {{ fp.crad.0 }}<br />
+          {{ fp.crad.1 }}<br />
+          {{ fp.crad.2 }}
+        </div>
+      </td>
+      <td>
+        <div>
+          {{ fp.imaging.0 }}<br />
+          {{ fp.imaging.1 }}<br />
+          {{ fp.imaging.2 }}
+        </div>
+      </td>
     </tr>
     {% endfor %}
   </tbody>
