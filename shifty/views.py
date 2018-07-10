@@ -60,24 +60,26 @@ def view_patient(request, mrn):
         for sessionID in sessionIDs:
             cursor.execute("SELECT PositionResultID, LiveImageID FROM PositionResult WHERE PatientSessionID=%s",[sessionID[0]])
             positionResults = cursor.fetchall()
-            final_pos_sql = "SELECT TOP 1 CreatedOn, CouchVert, CouchLong, CouchLat FROM Image where ImageID='"+positionResults[0][1]+"'"
-            for pr in positionResults[1:]:
-                final_pos_sql += " OR ImageID="+"'"+pr[1]+"'"
-            final_pos_sql += " ORDER BY CreatedOn DESC"
-            cursor.execute(final_pos_sql)
-            pos = cursor.fetchone()
+            if positionResults:
+                final_pos_sql = "SELECT TOP 1 CreatedOn, CouchVert, CouchLong, CouchLat FROM Image where ImageID='"+positionResults[0][1]+"'"
+                for pr in positionResults[1:]:
+                    final_pos_sql += " OR ImageID="+"'"+pr[1]+"'"
+                final_pos_sql += " ORDER BY CreatedOn DESC"
+                cursor.execute(final_pos_sql)
+                pos = cursor.fetchone()
 
-            try:
-                imagingPos = TreatmentPosition.objects.filter(mrn__exact=mrn).filter(date__exact=pos[0])[0]
-                ipos = (imagingPos.vert, imagingPos.long, imagingPos.lat)
-            except IndexError:
-                ipos = (0,0,0)
+                try:
+                    imagingPos = TreatmentPosition.objects.filter(mrn__exact=mrn).filter(date__exact=pos[0])[0]
+                    ipos = (imagingPos.vert, imagingPos.long, imagingPos.lat)
+                except IndexError:
+                    ipos = (None, None, None)
 
-            finalPositions.append({
-                'date': pos[0],
-                'crad': crad_to_varian_coords(pos[1], pos[2], pos[3]),
-                'imaging': ipos
-            })
+                finalPositions.append({
+                    'date': pos[0],
+                    'crad': crad_to_varian_coords(pos[1], pos[2], pos[3]),
+                    'imaging': ipos
+                })
+
         cursor.execute("SELECT Name FROM Patient WHERE Patient_ID=%s",[mrn])
         name = cursor.fetchone()
 

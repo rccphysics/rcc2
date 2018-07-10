@@ -1,7 +1,7 @@
 {% extends 'shifty/base.html' %}
 
 {% block content %}
-
+<main class="container">
 <h1>{{ name }} -- {{ mrn }}</h1>
 <table class="table table-striped">
   <thead class="thead-dark">
@@ -16,7 +16,7 @@
   <tbody>
     {% for fp in finalPositions %}
     <tr>
-      <td>{{ fp.date|date:"SHORT_DATE_FORMAT" }}</td>
+      <td class="align-middle">{{ fp.date|date:"SHORT_DATE_FORMAT" }}</td>
       <td>
         <div>
           Vert<br />
@@ -43,5 +43,5 @@
     {% endfor %}
   </tbody>
 </table>
-
+</main>
 {% endblock %}

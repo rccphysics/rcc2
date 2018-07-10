@@ -11,5 +11,6 @@ def crad_to_varian_coords(vert, long, lat):
     if lat < 0:
         vlat = round((10000+lat)/10,1)
     else:
-        vlat = round(lat,1)
+        vlat = round(lat/10,1)
+
     return (vvert, vlong, vlat)
