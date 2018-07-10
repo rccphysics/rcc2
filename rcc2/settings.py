@@ -25,7 +25,7 @@ SECRET_KEY = 'u9tss#v88-i-677599-)(&9h438xdm3t#4o+ga7w*v!l7vl#7='
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['0.0.0.0', '10.110.178.193']
+ALLOWED_HOSTS = ['0.0.0.0', '10.110.178.193', '127.0.0.1']
 
 
 # Application definition
@@ -57,7 +57,7 @@ ROOT_URLCONF = 'rcc2.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [os.path.join(BASE_DIR,'templates')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [

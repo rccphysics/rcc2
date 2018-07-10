@@ -18,6 +18,7 @@ from django.urls import include, path
 
 from . import views
 
+app_name = 'rcc2'
 urlpatterns = [
     path('', views.index, name='index'),
     path('shifty/', include('shifty.urls')),
