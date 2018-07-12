@@ -1,0 +1,6 @@
+<h1>Patients</h1>
+<ul>
+    {% for patient in patients %}
+    <li>{{ patient.mrn }} - {{ patient.name }}</li>
+    {% endfor %}
+</ul>
