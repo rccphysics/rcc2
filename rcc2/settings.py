@@ -38,6 +38,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'bootstrap4',
+    'common.apps.CommonConfig',
     'quarks.apps.QuarksConfig',
     'shifty.apps.ShiftyConfig',
 ]
