@@ -52,15 +52,26 @@ def add(request):
 
 def view_patient(request, mrn):
     with connections['crad'].cursor() as cursor:
-        cursor.execute("SELECT PatientID FROM Patient WHERE Patient_ID=%s",[mrn])
-        patientID = cursor.fetchone()
-        cursor.execute("SELECT PatientSessionID FROM PatientSession WHERE PatientID=%s ORDER BY CreatedOn DESC",[patientID[0]])
+        cursor.execute(
+            """SELECT PatientSession.PatientSessionID FROM PatientSession
+            INNER JOIN Patient ON Patient.PatientID = PatientSession.PatientID
+            WHERE Patient.Patient_ID=%s
+            ORDER BY PatientSession.CreatedOn DESC""",
+            [mrn]
+        )
         sessionIDs = cursor.fetchall()
         finalPositions = []
         for sessionID in sessionIDs:
-            cursor.execute("SELECT PositionResultID, LiveImageID FROM PositionResult WHERE PatientSessionID=%s",[sessionID[0]])
+            cursor.execute(
+                """SELECT PositionResult.PositionResultID, PositionResult.LiveImageID FROM PositionResult
+                INNER JOIN Image ON Image.ImageID = PositionResult.LiveImageID
+                WHERE PositionResult.PatientSessionID=%s
+                ORDER BY Image.CreatedOn DESC""",
+                [sessionID[0]]
+            )
             positionResults = cursor.fetchall()
             if positionResults:
+                #crad coordinates
                 final_pos_sql = "SELECT TOP 1 CreatedOn, CouchVert, CouchLong, CouchLat FROM Image where ImageID='"+positionResults[0][1]+"'"
                 for pr in positionResults[1:]:
                     final_pos_sql += " OR ImageID="+"'"+pr[1]+"'"
@@ -68,14 +79,30 @@ def view_patient(request, mrn):
                 cursor.execute(final_pos_sql)
                 pos = cursor.fetchone()
 
+                #imaging coordinates
                 try:
                     imagingPos = TreatmentPosition.objects.filter(mrn__exact=mrn).filter(date__exact=pos[0])[0]
                     ipos = (imagingPos.vert, imagingPos.long, imagingPos.lat)
                 except IndexError:
                     ipos = (None, None, None)
 
+                #original coordinates
+                relativeShifts = []
+                for pr in positionResults:
+                    cursor.execute("SELECT NonRigidPositionResult.TranslationX, NonRigidPositionResult.TranslationY, NonRigidPositionResult.TranslationZ FROM NonRigidPositionResult WHERE NonRigidPositionResult.PositionResultID=%s", [pr[0]])
+                    shifts = cursor.fetchone()
+                    relativeShifts.append((shifts[0],shifts[1],shifts[2]))
+                abs_lat = (-1*relativeShifts[0][0]) + pos[3]
+                abs_long = (-1*relativeShifts[0][1]) + pos[2]
+                abs_vert = (-1*relativeShifts[0][2]) + pos[1]
+                for shift in relativeShifts[1:]:
+                    abs_lat -= (-1*shift[0])
+                    abs_long -= (-1*shift[1])
+                    abs_vert -= (-1*shift[2])
+
                 finalPositions.append({
                     'date': pos[0],
+                    'initial': crad_to_varian_coords(abs_vert, abs_long, abs_lat),
                     'crad': crad_to_varian_coords(pos[1], pos[2], pos[3]),
                     'imaging': ipos
                 })
