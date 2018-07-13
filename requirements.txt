@@ -1,5 +1,10 @@
+certifi==2018.4.16
+chardet==3.0.4
 Django==2.0.6
 django-bootstrap4==0.0.6
 django-pyodbc-azure==2.0.6.1
+idna==2.7
 pyodbc==4.0.23
 pytz==2018.4
+requests==2.19.1
+urllib3==1.23

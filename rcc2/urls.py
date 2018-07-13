@@ -23,5 +23,6 @@ urlpatterns = [
     path('', views.index, name='index'),
     path('shifty/', include('shifty.urls')),
     path('quarks/', include('quarks.urls')),
+    path('mobiusutils/', include('mobiusutils.urls')),
     path('admin/', admin.site.urls),
 ]

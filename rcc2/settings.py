@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'common.apps.CommonConfig',
     'quarks.apps.QuarksConfig',
     'shifty.apps.ShiftyConfig',
+    'mobiusutils.apps.MobiusutilsConfig'
 ]
 
 MIDDLEWARE = [
