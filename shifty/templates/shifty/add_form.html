@@ -6,19 +6,49 @@
 
 <form action="{% url 'shifty:add' %}" method="post">
 {% csrf_token %}
-  <label for="mrn">MRN</label>
-  <input type="text" name="mrn" id="mrn" value="{{ mrn }}"/><br />
-  <label for="date">Date</label>
-  <input type="date" name="date" id="date" /><br />
-  <label for="vert">Vert</label>
-  <input type="text" name="vert" id="vert" /><br />
-  <label for="long">Long</label>
-  <input type="text" name="long" id="long" /><br />
-  <label for="lat">Lat</label>
-  <input type="text" name="lat" id="lat" /><br />
+  <div class="row">
+    <div class="col-1 text-right">
+      <label for="mrn">MRN</label>
+    </div>
+    <div class="col">
+      <input type="text" name="mrn" id="mrn" value="{{ mrn }}"/><br />
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-1 text-right">
+      <label for="date">Date</label>
+    </div>
+    <div class="col">
+      <input type="date" name="date" id="date" /><br />
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-1 text-right">
+      <label for="vert">Vert</label>
+    </div>
+    <div class="col">
+      <input type="text" name="vert" id="vert" /><br />
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-1 text-right">
+      <label for="long">Long</label>
+    </div>
+    <div class="col">
+      <input type="text" name="long" id="long" /><br />
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-1 text-right">
+      <label for="lat">Lat</label>
+    </div>
+    <div class="col">
+      <input type="text" name="lat" id="lat" /><br />
+    </div>
+  </div>
   <br />
-  <input type="submit" value="Submit" name="submit" />
-  <input type="submit" value="Submit and Enter Another" name="submitagain" />
+  <input type="submit" class="btn btn-primary" value="Submit" name="submit" />
+  <input type="submit" class="btn btn-outline-primary" value="Submit and Enter Another" name="submitagain" />
 </form>
 
 {% endblock %}
