@@ -1,18 +1,7 @@
-<!doctype html>
-<html lang="en">
-  <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+{% extends 'base.html' %}
 
-    {% load bootstrap4 %}
+{% block content %}
 
-    {% bootstrap_css %}
-    {% bootstrap_javascript jquery="full" %}
-
-    {% bootstrap_messages %}
-  </head>
-
-  <body>
     <h2>C-RAD Tools</h2>
     <ul>
       <li><a href="{% url 'shifty:index' %}">Shifty</a></li>
@@ -21,5 +10,4 @@
     <ul>
       <li><a href="{% url 'mobiusutils:list' %}">Email Notification</a></li>
     </ul>
-  </body>
-</html>
+{% endblock %}

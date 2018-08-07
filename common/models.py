@@ -16,9 +16,14 @@ class Employee(models.Model):
     email_address = models.CharField(max_length=100)
     site = models.ForeignKey(Site, on_delete=models.SET_NULL, null=True)
     extension = models.CharField(max_length=5)
+    initials = models.CharField(max_length=3)
+
+    @property
+    def full_name(self):
+        return '%s %s' % (self.first_name, self.last_name)
 
     def __str__(self):
-        return self.first_name+" "+self.last_name
+        return self.full_name
 
     class Meta:
         abstract = True
